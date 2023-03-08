@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { NewsItem } from "./NewsItem/NewsItem";
 
-const news =[
+const initNews =[
   {
     
       title: 'First news',
@@ -32,8 +33,26 @@ const news =[
 
 
 function App() {
+  const [news, setNews] = useState(initNews)
+
+  const newNews ={
+    title: 'New news',
+    url: 'example.com',
+    userName: 'User 4',
+    date: '10.20.11',
+    score: 1022,
+    id: 4
+  }
+
+  const newsCountHandler = () => {
+    setNews((prevState) => [...prevState, newNews])
+    
+  }  
+
   return (
-    <>
+    <><div>Number of news: {news.length}</div>
+    <button onClick={newsCountHandler}>Add news</button>
+    
       {
         news.map(item => {
           return <NewsItem 
