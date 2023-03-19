@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NewsItem } from "./NewsItem/NewsItem";
 
 const initNews =[
@@ -33,7 +33,15 @@ const initNews =[
 
 
 function App() {
-  const [news, setNews] = useState(initNews)
+  const checkStorage = () => JSON.parse(window.localStorage.getItem('newsKey')|| initNews);
+  const [news, setNews] = useState(checkStorage)
+  const [count, setCount] = useState(0)
+
+
+  useEffect(() =>{
+
+    window.localStorage.setItem('newsKey',JSON.stringify(news))
+  }, [news]);
 
   const newNews ={
     title: 'New news',
@@ -50,7 +58,10 @@ function App() {
   }  
 
   return (
-    <><div>Number of news: {news.length}</div>
+    <>
+    <button onClick={() => setCount(count + 1)}>{count}</button>
+    
+    <div>Number of news: {news.length}</div>
     <button onClick={newsCountHandler}>Add news</button>
     
       {
